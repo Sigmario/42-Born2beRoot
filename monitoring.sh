@@ -1,8 +1,8 @@
 OS=$(		uname -srvmo)
 
-CPU=$(		cat /proc/cpuinfo | grep 'physical id' | wc -l)
+CPU=$(		cat /proc/cpuinfo | grep -w 'physical id' | wc -l)
 
-VCPU=$(		cat /proc/cpuinfo | grep processor | wc -l)
+VCPU=$(		cat /proc/cpuinfo | grep -w processor | wc -l)
 
 RAM=$(		free -h --mega | awk 'NR==2{print$3"B/"$2"B ("$3/$2*100"%)"}')
 
