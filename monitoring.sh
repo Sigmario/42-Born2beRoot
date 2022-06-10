@@ -28,12 +28,12 @@ LVM=$(		if [[ $(lsblk | grep -w lvm) ]];
 			echo no;
 		fi)
 
-CONNECTIONS=$(	netstat -nat | grep ESTABLISHED | wc -l)
+CONNECTIONS=$(	netstat -nat | grep -w ESTABLISHED | wc -l)
 
 USERS=$(	who | wc -l)
 
-IP=$(		ifconfig | awk 'NR==2{print$2}')
-MAC=$(		ifconfig | awk 'NR==4{print$2}')
+IP=$(		sudo ifconfig | awk 'NR==2{print$2}')
+MAC=$(		sudo ifconfig | awk 'NR==4{print$2}')
 
 SUDO=$(		grep -w COMMAND /var/log/sudo/sudo.log | wc -l)
 
