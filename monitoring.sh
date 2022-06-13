@@ -8,16 +8,11 @@ RAM=$(		free -h --mega | awk 'NR==2{print$3"B/"$2"B ("$3/$2*100"%)"}')
 
 DISK=$(		df -h --total | awk 'END{print$3"B/"$2"B ("$5")"}')
 
-CPU_LOAD=$(	top -bn1 | grep %Cpu | awk '{
-		if ($2 != "0.0" && $4 == "0.0")
-			print$2"%";
-		if ($4 != "0.0" && $2 == "0.0")
-			print$4"%";
-		if ($2 != "0.0" && $4 != "0.0")
-			print$2"%";
-		if ($2 == "0.0" && $4 == "0.0")
-			print"0%";
-		}')
+CPU_LOAD=$(	top -bn1 | grep '%Cpu(s):' | awk '{
+		if ($8!="id,")
+			print100-$8"%";
+		if ($8=="id,")
+			print"0%"; }')
 
 BOOT=$(		who -b | awk '{print$3" at "$4}')
 
@@ -32,8 +27,8 @@ CONNECTIONS=$(	netstat -nat | grep -w ESTABLISHED | wc -l)
 
 USERS=$(	who | wc -l)
 
-IP=$(		sudo ifconfig | awk 'NR==2{print$2}')
-MAC=$(		sudo ifconfig | awk 'NR==4{print$2}')
+IP=$(		ifconfig | awk 'NR==2{print$2}')
+MAC=$(		ifconfig | awk 'NR==4{print$2}')
 
 SUDO=$(		grep -w COMMAND /var/log/sudo/sudo.log | wc -l)
 
