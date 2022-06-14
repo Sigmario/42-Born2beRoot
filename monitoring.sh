@@ -8,11 +8,12 @@ RAM=$(		free -h --mega | awk 'NR==2{print$3"B/"$2"B ("$3/$2*100"%)"}')
 
 DISK=$(		df -h --total | awk 'END{print$3"B/"$2"B ("$5")"}')
 
-CPU_LOAD=$(	top -bn1 | grep '%Cpu(s):' | awk '{
+CPU_LOAD=$(	top -bn1 | grep -w '%Cpu(s):' | awk '{
 		if ($8!="id,")
-			print100-$8"%";
+			print 100-$8"%";
 		if ($8=="id,")
-			print"0%"; }')
+			print"0%";
+		}')
 
 BOOT=$(		who -b | awk '{print$3" at "$4}')
 
